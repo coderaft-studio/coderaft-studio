@@ -13,29 +13,48 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
+    const fn = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-slate-950/95 backdrop-blur shadow-lg" : "bg-transparent"}`}>
+    <header
+      className="fixed top-0 left-0 right-0 z-50"
+      style={{
+        background: scrolled ? "rgba(6,4,15,0.9)" : "transparent",
+        backdropFilter: scrolled ? "blur(20px)" : "none",
+        borderBottom: `1px solid rgba(124,58,237,${scrolled ? 0.12 : 0})`,
+        transition: "background 0.4s ease, border-color 0.4s ease",
+      }}>
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <a href="/" className="font-bold text-xl text-white tracking-tight flex items-center gap-2">
-          <span className="w-7 h-7 bg-gradient-to-br from-violet-500 to-fuchsia-500 rounded-lg flex items-center justify-center text-xs font-black">C</span>
-          Coderaft<span className="text-violet-400">Studio</span>
+        {/* Logo */}
+        <a href="/" className="font-black text-xl text-white flex items-center gap-2" style={{ textDecoration: "none" }}>
+          <span className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black text-white"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)" }}>C</span>
+          Coderaft<span style={{ color: "#a78bfa" }}>Studio</span>
         </a>
 
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
-          {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-slate-300 hover:text-white transition-colors text-sm font-medium">{l.label}</a>
+          {links.map(l => (
+            <a key={l.href} href={l.href}
+              className="text-sm font-medium transition-colors"
+              style={{ color: "rgba(240,244,255,0.5)", textDecoration: "none" }}
+              onMouseEnter={e => e.target.style.color = "#a78bfa"}
+              onMouseLeave={e => e.target.style.color = "rgba(240,244,255,0.5)"}>
+              {l.label}
+            </a>
           ))}
-          <a href="https://fastwork.id/user/coderaft" target="_blank" rel="noopener noreferrer" className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-5 py-2 rounded-full text-sm font-bold transition-all shadow-lg shadow-violet-900/30">
+          <a href="https://fastwork.id/user/coderaft" target="_blank" rel="noopener noreferrer"
+            className="px-5 py-2 rounded-full text-sm font-bold text-white transition-all hover:scale-105"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)", textDecoration: "none" }}>
             Order di Fastwork
           </a>
         </nav>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden text-white p-2">
+        {/* Mobile toggle */}
+        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-white">
           <div className="w-6 flex flex-col gap-1.5">
             <span className={`block h-0.5 bg-white transition-all ${open ? "rotate-45 translate-y-2" : ""}`} />
             <span className={`block h-0.5 bg-white transition-all ${open ? "opacity-0" : ""}`} />
@@ -44,12 +63,19 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile menu */}
       {open && (
-        <nav className="md:hidden bg-slate-950 border-t border-slate-800 px-6 py-4 flex flex-col gap-4">
-          {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-slate-300 hover:text-white font-medium">{l.label}</a>
+        <nav className="md:hidden px-6 py-5 flex flex-col gap-4"
+          style={{ background: "rgba(6,4,15,0.98)", borderTop: "1px solid rgba(124,58,237,0.12)" }}>
+          {links.map(l => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+              className="font-medium" style={{ color: "rgba(240,244,255,0.6)", textDecoration: "none" }}>
+              {l.label}
+            </a>
           ))}
-          <a href="https://fastwork.id/user/coderaft" target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)} className="bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white px-5 py-2 rounded-full text-center font-bold">
+          <a href="https://fastwork.id/user/coderaft" target="_blank" rel="noopener noreferrer"
+            className="text-center py-3 rounded-full font-bold text-white"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)", textDecoration: "none" }}>
             Order di Fastwork
           </a>
         </nav>

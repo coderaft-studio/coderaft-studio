@@ -1,54 +1,107 @@
 export default function Hero() {
   return (
-    <section className="min-h-screen bg-[#0a0a0f] flex items-center relative overflow-hidden">
-      {/* Grid bg */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(139,92,246,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(139,92,246,0.04)_1px,transparent_1px)] bg-[size:64px_64px]" />
-      {/* Glows */}
-      <div className="absolute top-20 left-1/4 w-72 h-72 bg-violet-600/15 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-1/4 w-72 h-72 bg-fuchsia-600/15 rounded-full blur-3xl" />
+    <section className="relative min-h-screen bg-[#06040f] flex items-center overflow-hidden">
+      {/* Ambient glows */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] opacity-20 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse,#7c3aed,transparent 70%)" }} />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] opacity-10 pointer-events-none"
+        style={{ background: "radial-gradient(circle,#ec4899,transparent 70%)" }} />
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32 text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-violet-950/60 border border-violet-700/40 text-violet-300 text-xs font-semibold px-4 py-2 rounded-full mb-8">
-          <span className="w-2 h-2 bg-violet-400 rounded-full animate-pulse" />
-          Open for Projects · Fast Delivery
-        </div>
+      {/* Grid pattern */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{ backgroundImage: "linear-gradient(rgba(124,58,237,1) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,1) 1px,transparent 1px)", backgroundSize: "72px 72px" }} />
 
-        <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
-          Kami Bangun{" "}
-          <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
-            Website & App
-          </span>
-          <br />yang Bekerja
-        </h1>
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-32 w-full">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-        <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Coderaft Studio hadir untuk UMKM, startup, dan profesional yang ingin tampil digital
-          dengan website modern, landing page yang konversi, dan web app yang fungsional.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-          <a href="#portofolio" className="bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-2xl shadow-violet-900/40">
-            Lihat Portofolio
-          </a>
-          <a href="#kontak" className="border border-slate-700 hover:border-violet-500 text-slate-300 hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all">
-            Diskusi Project →
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-          {[
-            { num: "50+", label: "Project Selesai" },
-            { num: "5", label: "Demo Live" },
-            { num: "< 7 Hari", label: "Delivery" },
-            { num: "100%", label: "Klien Puas" },
-          ].map((s) => (
-            <div key={s.label} className="bg-slate-900/50 border border-slate-800/50 rounded-2xl py-5 px-4">
-              <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent mb-1">{s.num}</div>
-              <div className="text-slate-400 text-xs">{s.label}</div>
+          {/* Left — Text */}
+          <div>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-bold"
+              style={{ background: "rgba(124,58,237,0.12)", border: "1px solid rgba(124,58,237,0.25)", color: "#a78bfa" }}>
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse inline-block" />
+              Open for Projects · Fast Delivery
             </div>
-          ))}
+
+            <h1 className="font-black mb-6 text-white"
+              style={{ fontSize: "clamp(3rem,7vw,5.5rem)", letterSpacing: "-0.04em", lineHeight: "1.05" }}>
+              Kami Bangun<br />
+              <span style={{ background: "linear-gradient(135deg,#a78bfa,#ec4899,#f97316)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Website
+              </span><br />
+              yang Bekerja.
+            </h1>
+
+            <p className="text-lg leading-relaxed mb-10" style={{ color: "rgba(240,244,255,0.5)", maxWidth: "480px" }}>
+              Coderaft Studio hadir untuk UMKM, startup, dan profesional yang ingin tampil digital
+              dengan landing page yang konversi, web app fungsional, dan dashboard yang powerful.
+            </p>
+
+            <div className="flex flex-wrap gap-4 mb-14">
+              <a href="#portofolio"
+                className="px-8 py-4 rounded-full font-black text-lg text-white transition-all hover:scale-105"
+                style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)", boxShadow: "0 0 40px rgba(124,58,237,0.35)" }}>
+                Lihat Portofolio
+              </a>
+              <a href="#kontak"
+                className="px-8 py-4 rounded-full font-bold text-lg transition-all"
+                style={{ border: "1px solid rgba(255,255,255,0.1)", color: "rgba(240,244,255,0.7)" }}>
+                Diskusi Project →
+              </a>
+            </div>
+
+            {/* Stats row */}
+            <div className="flex gap-8">
+              {[{ num: "50+", label: "Project" }, { num: "<7hr", label: "Delivery" }, { num: "100%", label: "Puas" }].map(s => (
+                <div key={s.label}>
+                  <div className="text-2xl font-black" style={{ background: "linear-gradient(135deg,#a78bfa,#f0abfc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{s.num}</div>
+                  <div className="text-xs font-medium" style={{ color: "rgba(240,244,255,0.35)" }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right — Floating cards */}
+          <div className="hidden lg:block relative h-[480px]">
+            {/* Main card */}
+            <div className="absolute top-8 left-0 right-16 rounded-2xl p-6"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(124,58,237,0.2)", backdropFilter: "blur(12px)" }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-3 h-3 rounded-full bg-red-400" />
+                <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                <div className="w-3 h-3 rounded-full bg-green-400" />
+                <span className="text-xs ml-2" style={{ color: "rgba(240,244,255,0.3)" }}>coderaft-studio.vercel.app</span>
+              </div>
+              <div className="h-2.5 rounded-full mb-3 w-3/4" style={{ background: "linear-gradient(90deg,#7c3aed,#ec4899)" }} />
+              <div className="h-2.5 rounded-full mb-3 w-full" style={{ background: "rgba(255,255,255,0.06)" }} />
+              <div className="h-2.5 rounded-full w-5/6" style={{ background: "rgba(255,255,255,0.06)" }} />
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                {["#7c3aed","#ec4899","#06b6d4"].map((c,i) => (
+                  <div key={i} className="h-16 rounded-xl" style={{ background: `${c}20`, border: `1px solid ${c}30` }} />
+                ))}
+              </div>
+            </div>
+
+            {/* Floating badge 1 */}
+            <div className="absolute bottom-32 -left-4 px-4 py-3 rounded-2xl shadow-2xl"
+              style={{ background: "rgba(124,58,237,0.9)", backdropFilter: "blur(12px)" }}>
+              <div className="text-white text-xs font-bold">✓ Deployed to Vercel</div>
+              <div className="text-violet-200 text-xs">2 minutes ago</div>
+            </div>
+
+            {/* Floating badge 2 */}
+            <div className="absolute bottom-12 right-0 px-4 py-3 rounded-2xl shadow-2xl"
+              style={{ background: "rgba(6,4,15,0.9)", border: "1px solid rgba(236,72,153,0.3)", backdropFilter: "blur(12px)" }}>
+              <div className="text-white text-xs font-bold">📈 Traffic +340%</div>
+              <div className="text-slate-400 text-xs">after launch</div>
+            </div>
+
+            {/* Floating badge 3 */}
+            <div className="absolute top-1/2 -right-4 px-4 py-3 rounded-2xl shadow-2xl"
+              style={{ background: "rgba(6,4,15,0.9)", border: "1px solid rgba(16,185,129,0.3)", backdropFilter: "blur(12px)" }}>
+              <div className="text-emerald-400 text-xs font-bold">⚡ 99 Lighthouse</div>
+              <div className="text-slate-400 text-xs">Performance score</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
