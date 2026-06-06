@@ -15,12 +15,12 @@ export default function Kontak() {
   };
 
   return (
-    <section id="kontak" className="py-24 bg-[#0a0a0f]">
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-start">
+    <section id="kontak" className="py-16 md:py-24 bg-[#0a0a0f]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid md:grid-cols-2 gap-8 md:gap-16 items-start">
         {/* Info */}
         <div>
           <p className="text-violet-400 font-semibold tracking-widest uppercase text-sm mb-3">Mulai Project</p>
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-5 sm:mb-6">
             Siap <span className="bg-gradient-to-r from-violet-400 to-fuchsia-400 bg-clip-text text-transparent">Kerja Sama?</span>
           </h2>
           <p className="text-slate-400 leading-relaxed mb-8">
@@ -58,7 +58,7 @@ export default function Kontak() {
         </div>
 
         {/* Form */}
-        <div className="bg-slate-900/60 border border-slate-800/50 rounded-3xl p-8">
+        <div className="bg-slate-900/60 border border-slate-800/50 rounded-2xl sm:rounded-3xl p-5 sm:p-8">
           {sent ? (
             <div className="text-center py-12">
               <div className="text-5xl mb-4">🚀</div>
@@ -76,7 +76,7 @@ export default function Kontak() {
               <h3 className="text-xl font-bold text-white mb-2">Ceritakan Project Anda</h3>
               <p className="text-slate-400 text-xs mb-4">Isi form ini sebagai persiapan, lalu kami akan arahkan ke Fastwork untuk diskusi lebih lanjut.</p>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {[
                   { name: "nama", label: "Nama *", placeholder: "Budi Santoso" },
                   { name: "email", label: "Email *", placeholder: "budi@email.com" },

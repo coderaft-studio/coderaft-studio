@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
     <footer style={{ background: "#04030a", borderTop: "1px solid rgba(124,58,237,0.1)" }}>
-      <div className="max-w-6xl mx-auto px-6 py-14">
-        <div className="grid md:grid-cols-4 gap-10 mb-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10 mb-8 sm:mb-10">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="font-black text-2xl text-white mb-3 flex items-center gap-2">
