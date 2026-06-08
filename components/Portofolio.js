@@ -51,7 +51,7 @@ const demos = [
     desc: "Sistem HR dengan dashboard kehadiran, CRUD karyawan, absensi real-time, dan chart departemen.",
     url: "https://demo-coderafthr.vercel.app",
     color: "from-emerald-600 to-teal-600",
-    emoji: "👥",
+    emoji: "💼",
     cat: "Web App",
     lang: "id",
     tags: ["HR", "Karyawan", "Absensi"],
