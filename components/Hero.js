@@ -70,7 +70,7 @@ export default function Hero() {
                 <div className="w-3 h-3 rounded-full bg-red-400" />
                 <div className="w-3 h-3 rounded-full bg-yellow-400" />
                 <div className="w-3 h-3 rounded-full bg-green-400" />
-                <span className="text-xs ml-2" style={{ color: "rgba(240,244,255,0.3)" }}>coderaft-studio.vercel.app</span>
+                <span className="text-xs ml-2" style={{ color: "rgba(240,244,255,0.3)" }}>coderaft.web.id</span>
               </div>
               <div className="h-2.5 rounded-full mb-3 w-3/4" style={{ background: "linear-gradient(90deg,#7c3aed,#ec4899)" }} />
               <div className="h-2.5 rounded-full mb-3 w-full" style={{ background: "rgba(255,255,255,0.06)" }} />

@@ -5,7 +5,7 @@ const demos = [
     title: "Nusantara Kitchen",
     subcat: "Landing Page — Restoran & Kuliner",
     desc: "Website restoran modern dengan hero full-screen, menu produk, galeri, testimoni, dan reservasi via WhatsApp.",
-    url: "https://demo-resto-nusantara.vercel.app",
+    url: "https://resto.coderaft.web.id",
     color: "from-amber-600 to-orange-600",
     emoji: "🍽",
     cat: "Landing Page",
@@ -16,7 +16,7 @@ const demos = [
     title: "Batik Nala",
     subcat: "Landing Page — Fashion & UMKM",
     desc: "Toko batik premium dengan koleksi produk, cara pemesanan, testimoni, dan CTA WhatsApp yang optimal.",
-    url: "https://demo-batik-nala.vercel.app",
+    url: "https://batik.coderaft.web.id",
     color: "from-indigo-600 to-violet-600",
     emoji: "🪡",
     cat: "Landing Page",
@@ -27,7 +27,7 @@ const demos = [
     title: "Kreasi Digital",
     subcat: "Landing Page — Agency & Konsultan",
     desc: "Website digital agency profesional dengan layanan, portofolio, pricing tiers, dan contact form.",
-    url: "https://demo-kreasi-digital.vercel.app",
+    url: "https://kreasi.coderaft.web.id",
     color: "from-cyan-600 to-blue-600",
     emoji: "🚀",
     cat: "Landing Page",
@@ -38,7 +38,7 @@ const demos = [
     title: "CoderaftBoard",
     subcat: "Web App — Business Dashboard",
     desc: "Dashboard UMKM dengan CRUD produk, manajemen pesanan, update status real-time, dan analytics.",
-    url: "https://demo-nexaboard.vercel.app",
+    url: "https://board.coderaft.web.id",
     color: "from-violet-600 to-purple-600",
     emoji: "📊",
     cat: "Web App",
@@ -49,7 +49,7 @@ const demos = [
     title: "CoderaftHR",
     subcat: "Web App — HR Management System",
     desc: "Sistem HR dengan dashboard kehadiran, CRUD karyawan, absensi real-time, dan chart departemen.",
-    url: "https://demo-coderafthr.vercel.app",
+    url: "https://hr.coderaft.web.id",
     color: "from-emerald-600 to-teal-600",
     emoji: "💼",
     cat: "Web App",
@@ -79,7 +79,7 @@ export default function Portofolio() {
               </span>
             </h2>
           </div>
-          <a href="https://coderaft-demos.vercel.app" target="_blank" rel="noopener noreferrer"
+          <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-2 font-bold text-sm transition-all hover:gap-3"
             style={{ color: "#a78bfa", textDecoration: "none" }}>
             Lihat semua demo →
@@ -178,7 +178,7 @@ export default function Portofolio() {
           })}
 
           {/* Lihat Semua Demo — style unik, bukan card biasa */}
-          <a href="https://coderaft-demos.vercel.app" target="_blank" rel="noopener noreferrer"
+          <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
             style={{ textDecoration: "none", display: "block", height: "100%" }}>
             <div
               style={{
