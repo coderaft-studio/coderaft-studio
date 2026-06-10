@@ -27,8 +27,8 @@ export default function Layanan() {
           style={{ border: "1px solid rgba(124,58,237,0.12)" }}>
           {layanan.map((l, i) => (
             <div key={l.no}
-              className="group transition-all cursor-pointer"
-              style={{ borderBottom: i < layanan.length - 1 ? "1px solid rgba(124,58,237,0.08)" : "none", background: "rgba(255,255,255,0.015)" }}>
+              className="group transition-all"
+              style={{ cursor:"default", borderBottom: i < layanan.length - 1 ? "1px solid rgba(124,58,237,0.08)" : "none", background: "rgba(255,255,255,0.015)" }}>
 
               {/* Mobile layout: stacked */}
               <div className="flex items-start gap-4 px-4 sm:px-8 py-5 md:py-6 hover:bg-violet-950/20">

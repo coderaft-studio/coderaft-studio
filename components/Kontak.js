@@ -118,8 +118,15 @@ export default function Kontak() {
                   className="w-full bg-slate-800/60 border border-slate-700/50 focus:border-violet-500 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-all resize-none" />
               </div>
 
+              <p className="text-center text-xs" style={{ color:"rgba(167,139,250,0.5)" }}>
+                Belum yakin budget-nya?{" "}
+                <a href="/hitung" style={{ color:"#a78bfa", fontWeight:700, textDecoration:"none" }}>
+                  Hitung estimasi dulu →
+                </a>
+              </p>
+
               <button type="submit"
-                className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-violet-900/30 flex items-center justify-center gap-2">
+                className="w-full bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white py-4 rounded-xl font-bold transition-all shadow-lg shadow-violet-900/30 flex items-center justify-center gap-2 cursor-pointer">
                 <span>Hubungi via Fastwork</span>
                 <span>🛍</span>
               </button>

@@ -36,6 +36,22 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Resource */}
+          <div>
+            <h4 className="font-black text-sm mb-4 uppercase tracking-widest" style={{ color: "rgba(240,244,255,0.5)" }}>Resource</h4>
+            <ul className="space-y-2 text-sm">
+              {[
+                { label:"Blog UMKM Digital", href:"/blog" },
+                { label:"Tools Gratis",      href:"/tools" },
+                { label:"Hitung Harga",      href:"/hitung" },
+              ].map(l=>(
+                <li key={l.label}>
+                  <a href={l.href} className="transition-colors hover:text-white" style={{ color:"rgba(240,244,255,0.35)", textDecoration:"none" }}>{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Kontak */}
           <div>
             <h4 className="font-black text-sm mb-4 uppercase tracking-widest" style={{ color: "rgba(240,244,255,0.5)" }}>Kontak</h4>
