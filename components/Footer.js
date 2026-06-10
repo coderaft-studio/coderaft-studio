@@ -1,3 +1,5 @@
+import BoatIcon from "@/components/shared/BoatIcon";
+
 export default function Footer() {
   return (
     <footer style={{ background: "#04030a", borderTop: "1px solid rgba(124,58,237,0.1)" }}>
@@ -6,8 +8,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="font-black text-2xl text-white mb-3 flex items-center gap-2">
-              <span className="w-8 h-8 rounded-xl flex items-center justify-center text-sm font-black text-white"
-                style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)" }}>C</span>
+              <BoatIcon size={32} />
               Coderaft<span style={{ color: "#a78bfa" }}>Studio</span>
             </div>
             <p className="text-sm leading-relaxed max-w-xs mb-5" style={{ color: "rgba(240,244,255,0.35)" }}>

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import BoatIcon from "@/components/shared/BoatIcon";
 
 const links = [
   { href: "#layanan", label: "Layanan" },
@@ -30,8 +31,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="font-black text-xl text-white flex items-center gap-2" style={{ textDecoration: "none" }}>
-          <span className="w-7 h-7 rounded-lg flex items-center justify-center text-xs font-black text-white"
-            style={{ background: "linear-gradient(135deg,#7c3aed,#ec4899)" }}>C</span>
+          <BoatIcon size={28} />
           Coderaft<span style={{ color: "#a78bfa" }}>Studio</span>
         </a>
 

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import BoatIcon from "@/components/shared/BoatIcon";
 
 const VIO  = "#a78bfa";
 const PINK = "#ec4899";
@@ -26,9 +27,7 @@ export default function SharedNav() {
 
         {/* Logo */}
         <Link href="/" style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"8px" }}>
-          <div style={{ width:"30px", height:"30px", background:"linear-gradient(135deg,#7c3aed,#ec4899)", borderRadius:"8px", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 12px rgba(124,58,237,0.4)" }}>
-            <span style={{ color:"#fff", fontWeight:900, fontSize:"13px" }}>C</span>
-          </div>
+          <BoatIcon size={30} />
           <span style={{ color:TEXT, fontWeight:800, fontSize:"15px" }}>
             Coderaft<span style={{ color:VIO }}> Studio</span>
           </span>
