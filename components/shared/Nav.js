@@ -14,9 +14,9 @@ export default function SharedNav() {
   const path = usePathname();
 
   const links = [
-    { href:"/blog",   label:"Blog" },
-    { href:"/tools",  label:"Tools Gratis" },
-    { href:"/hitung", label:"Hitung Harga" },
+    { href:"/blog",   label:"Blog",         icon:"📚", badge:null },
+    { href:"/tools",  label:"Tools Gratis", icon:"🛠",  badge:"Gratis" },
+    { href:"/hitung", label:"Hitung Harga", icon:"🧮",  badge:"Baru" },
   ];
 
   const isActive = (href) => path.startsWith(href);
@@ -34,15 +34,24 @@ export default function SharedNav() {
         </Link>
 
         {/* Links */}
-        <div className="hidden sm:flex items-center gap-1">
+        <div className="hidden sm:flex items-center gap-2">
           {links.map(l=>(
             <Link key={l.href} href={l.href}
-              style={{ textDecoration:"none", padding:"6px 14px", borderRadius:"20px", fontSize:"13px", fontWeight:600,
-                background:isActive(l.href)?`rgba(139,92,246,0.15)`:"transparent",
-                color:isActive(l.href)?VIO:MUT,
-                border:isActive(l.href)?`1px solid rgba(139,92,246,0.3)`:"1px solid transparent",
-              }}>
-              {l.label}
+              style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"6px", padding:"7px 14px", borderRadius:"20px", fontSize:"12px", fontWeight:700, transition:"all 0.2s", position:"relative",
+                background:isActive(l.href)?`linear-gradient(135deg,rgba(124,58,237,0.3),rgba(236,72,153,0.2))`:"rgba(255,255,255,0.06)",
+                color:isActive(l.href)?"#fff":"rgba(240,244,255,0.75)",
+                border:isActive(l.href)?`1px solid rgba(139,92,246,0.5)`:`1px solid rgba(255,255,255,0.1)`,
+                boxShadow:isActive(l.href)?"0 0 12px rgba(124,58,237,0.2)":"none",
+              }}
+              onMouseEnter={e=>{ if(!isActive(l.href)){ e.currentTarget.style.background="rgba(139,92,246,0.15)"; e.currentTarget.style.color="#fff"; e.currentTarget.style.borderColor="rgba(139,92,246,0.35)"; }}}
+              onMouseLeave={e=>{ if(!isActive(l.href)){ e.currentTarget.style.background="rgba(255,255,255,0.06)"; e.currentTarget.style.color="rgba(240,244,255,0.75)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.1)"; }}}>
+              <span style={{ fontSize:"14px" }}>{l.icon}</span>
+              <span style={{ fontSize:"13px", fontWeight:700 }}>{l.label}</span>
+              {l.badge && (
+                <span style={{ background:isActive(l.href)?"rgba(236,72,153,0.3)":"rgba(236,72,153,0.2)", color:"#f9a8d4", fontSize:"9px", fontWeight:800, padding:"1px 6px", borderRadius:"10px", letterSpacing:"0.04em" }}>
+                  {l.badge}
+                </span>
+              )}
             </Link>
           ))}
         </div>
