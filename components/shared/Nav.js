@@ -50,7 +50,9 @@ export default function SharedNav() {
         {/* CTA */}
         <div className="flex items-center gap-3">
           <Link href="/"
-            style={{ textDecoration:"none", fontSize:"12px", fontWeight:600, color:MUT }}>
+            style={{ textDecoration:"none", display:"flex", alignItems:"center", gap:"6px", fontSize:"12px", fontWeight:700, color:TEXT, background:"rgba(139,92,246,0.1)", border:`1px solid rgba(139,92,246,0.25)`, padding:"7px 14px", borderRadius:"20px", transition:"all 0.2s" }}
+            onMouseEnter={e=>{ e.currentTarget.style.background="rgba(139,92,246,0.2)"; e.currentTarget.style.borderColor="rgba(139,92,246,0.5)"; }}
+            onMouseLeave={e=>{ e.currentTarget.style.background="rgba(139,92,246,0.1)"; e.currentTarget.style.borderColor="rgba(139,92,246,0.25)"; }}>
             ← Portfolio
           </Link>
         </div>
