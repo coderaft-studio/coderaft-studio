@@ -252,6 +252,36 @@ export default function HitungPage() {
           <span key={t} style={{ color:MUT, fontSize:"11px" }}>✓ {t}</span>
         ))}
       </div>
+
+      {/* Portfolio info box */}
+      <div style={{ marginTop:"28px", background:"linear-gradient(135deg,rgba(124,58,237,0.12),rgba(236,72,153,0.08))", border:`1px solid rgba(139,92,246,0.25)`, borderRadius:"20px", padding:"20px 22px" }}>
+        {/* Header */}
+        <div style={{ textAlign:"center", marginBottom:"16px" }}>
+          <div style={{ color:TEXT, fontWeight:900, fontSize:"14px", marginBottom:"4px" }}>
+            Belum yakin dengan kualitas kami?
+          </div>
+          <div style={{ color:MUT, fontSize:"11px", marginBottom:"14px" }}>Lihat demo website live yang sudah kami buat</div>
+          <Link href="/"
+            style={{ textDecoration:"none", display:"inline-block", background:`linear-gradient(135deg,${VIO2},${PINK})`, color:"#fff", fontWeight:700, fontSize:"12px", padding:"9px 22px", borderRadius:"20px", boxShadow:`0 4px 14px rgba(124,58,237,0.35)` }}>
+            Lihat Semua Portofolio →
+          </Link>
+        </div>
+
+        {/* Category previews */}
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"8px" }}>
+          {[
+            { icon:"📄", label:"Landing Page",  desc:"Berbagai industri",  color:"#a78bfa" },
+            { icon:"📊", label:"Dashboard",     desc:"Web App interaktif", color:"#ec4899" },
+            { icon:"🌐", label:"Multi Bahasa",  desc:"Indonesia & Inggris",color:"#06b6d4" },
+          ].map(c=>(
+            <div key={c.label} style={{ background:"rgba(255,255,255,0.05)", border:`1px solid rgba(255,255,255,0.08)`, borderRadius:"12px", padding:"10px 12px", textAlign:"center" }}>
+              <div style={{ fontSize:"20px", marginBottom:"4px" }}>{c.icon}</div>
+              <div style={{ color:c.color, fontWeight:700, fontSize:"11px" }}>{c.label}</div>
+              <div style={{ color:MUT, fontSize:"10px", marginTop:"2px" }}>{c.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 
