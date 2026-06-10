@@ -83,7 +83,7 @@ export default function Hero() {
             </div>
             <div className="absolute bottom-32 -left-4 px-4 py-3 rounded-2xl shadow-2xl"
               style={{ background: "rgba(124,58,237,0.9)", backdropFilter: "blur(12px)" }}>
-              <div className="text-white text-xs font-bold">✓ Deployed to Vercel</div>
+              <div className="text-white text-xs font-bold">✓ Live & Ready</div>
               <div className="text-violet-200 text-xs">2 minutes ago</div>
             </div>
             <div className="absolute bottom-12 right-0 px-4 py-3 rounded-2xl shadow-2xl"

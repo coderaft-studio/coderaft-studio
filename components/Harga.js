@@ -1,7 +1,7 @@
 const paket = [
   {
     nama: "Landing Page", harga: "500.000", per: "/ halaman", highlight: false,
-    fitur: ["1 halaman responsif", "Desain modern custom", "SEO dasar", "Integrasi WhatsApp", "Deploy ke Vercel", "Revisi 3x"],
+    fitur: ["1 halaman responsif", "Desain modern custom", "SEO dasar", "Integrasi WhatsApp", "Deploy ke Cloud Hosting", "Revisi 3x"],
     color: "#a78bfa",
   },
   {

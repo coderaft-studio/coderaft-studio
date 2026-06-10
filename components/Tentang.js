@@ -2,7 +2,7 @@ const skills = [
   { label: "Frontend", color: "#a78bfa", items: ["React", "Next.js", "Tailwind CSS", "TypeScript"] },
   { label: "Backend",  color: "#67e8f9", items: ["Node.js", "Express", "Laravel", "REST API"] },
   { label: "Database", color: "#86efac", items: ["MySQL", "PostgreSQL", "MongoDB", "Prisma"] },
-  { label: "Tools",    color: "#fda4af", items: ["Git", "Vercel", "Docker", "Figma"] },
+  { label: "Tools",    color: "#fda4af", items: ["Git", "CI/CD", "Docker", "Figma"] },
 ];
 
 const values = [
