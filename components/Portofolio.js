@@ -50,7 +50,7 @@ const demos = [
     subcat: "Web App — HR Management System",
     desc: "Sistem HR dengan dashboard kehadiran, CRUD karyawan, absensi real-time, dan chart departemen.",
     url: "https://hr.coderaft.web.id",
-    color: "from-emerald-600 to-teal-600",
+    color: "from-indigo-600 to-blue-700",
     emoji: "💼",
     cat: "Web App",
     lang: "id",
