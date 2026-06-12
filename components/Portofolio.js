@@ -1,69 +1,73 @@
 "use client";
+import { useState } from "react";
 
 const demos = [
-  {
-    title: "Nusantara Kitchen",
-    subcat: "Landing Page — Restoran & Kuliner",
-    desc: "Website restoran modern dengan hero full-screen, menu produk, galeri, testimoni, dan reservasi via WhatsApp.",
-    url: "https://resto.coderaft.web.id",
-    color: "from-amber-600 to-orange-600",
-    emoji: "🍽",
-    cat: "Landing Page",
-    lang: "id",
-    tags: ["Restoran", "WhatsApp", "Galeri"],
-  },
-  {
-    title: "Batik Nala",
-    subcat: "Landing Page — Fashion & UMKM",
-    desc: "Toko batik premium dengan koleksi produk, cara pemesanan, testimoni, dan CTA WhatsApp yang optimal.",
-    url: "https://batik.coderaft.web.id",
-    color: "from-indigo-600 to-violet-600",
-    emoji: "🪡",
-    cat: "Landing Page",
-    lang: "id",
-    tags: ["Fashion", "UMKM", "E-commerce"],
-  },
-  {
-    title: "Kreasi Digital",
-    subcat: "Landing Page — Agency & Konsultan",
-    desc: "Website digital agency profesional dengan layanan, portofolio, pricing tiers, dan contact form.",
-    url: "https://kreasi.coderaft.web.id",
-    color: "from-cyan-600 to-blue-600",
-    emoji: "🚀",
-    cat: "Landing Page",
-    lang: "id",
-    tags: ["Agency", "Pricing", "B2B"],
-  },
-  {
-    title: "CoderaftBoard",
-    subcat: "Web App — Business Dashboard",
-    desc: "Dashboard UMKM dengan CRUD produk, manajemen pesanan, update status real-time, dan analytics.",
-    url: "https://board.coderaft.web.id",
-    color: "from-violet-600 to-purple-600",
-    emoji: "📊",
-    cat: "Web App",
-    lang: "id",
-    tags: ["Dashboard", "CRUD", "Analytics"],
-  },
-  {
-    title: "CoderaftHR",
-    subcat: "Web App — HR Management System",
-    desc: "Sistem HR dengan dashboard kehadiran, CRUD karyawan, absensi real-time, dan chart departemen.",
-    url: "https://hr.coderaft.web.id",
-    color: "from-indigo-600 to-blue-700",
-    emoji: "💼",
-    cat: "Web App",
-    lang: "id",
-    tags: ["HR", "Karyawan", "Absensi"],
-  },
+  { title:"Nusantara Kitchen", subcat:"Landing Page — Restoran & Kuliner",    desc:"Website restoran modern dengan hero full-screen, menu produk, galeri, testimoni, dan reservasi via WhatsApp.",            url:"https://resto.coderaft.web.id",    color:"from-amber-600 to-orange-600",   emoji:"🍽",  cat:"Landing Page", lang:"id", pageType:"satu",  tags:["Restoran","WhatsApp","Galeri"] },
+  { title:"Axiom Studio",      subcat:"Landing Page — Digital Agency",         desc:"Website agency digital multi-halaman dengan About, Services, Portfolio 12 project, Blog, dan Contact.",                    url:"https://axiom.coderaft.web.id",    color:"from-violet-700 to-indigo-800",  emoji:"🎯",  cat:"Landing Page", lang:"en", pageType:"multi", tags:["Agency","English","Multi-Page"] },
+  { title:"Kreasi Digital",    subcat:"Landing Page — Agency & Konsultan",     desc:"Website digital agency profesional dengan layanan, portofolio, pricing tiers, dan contact form.",                           url:"https://kreasi.coderaft.web.id",   color:"from-cyan-600 to-blue-600",      emoji:"💡",  cat:"Landing Page", lang:"id", pageType:"satu",  tags:["Agency","Pricing","B2B"] },
+  { title:"CoderaftBoard",     subcat:"Dashboard — Business Analytics",        desc:"Dashboard UMKM dengan CRUD produk, manajemen pesanan, update status real-time, dan analytics.",                             url:"https://board.coderaft.web.id",    color:"from-violet-600 to-purple-600",  emoji:"📊",  cat:"Dashboard",    lang:"id", pageType:"multi", tags:["Dashboard","CRUD","Analytics"] },
+  { title:"CoderaftHR",        subcat:"Dashboard — HR Management System",      desc:"Sistem HR dengan dashboard kehadiran, CRUD karyawan, absensi real-time, dan chart departemen.",                              url:"https://hr.coderaft.web.id",       color:"from-indigo-600 to-blue-700",    emoji:"💼",  cat:"Dashboard",    lang:"id", pageType:"multi", tags:["HR","Karyawan","Absensi"] },
+  { title:"Amber & Co.",       subcat:"Landing Page — Coffee & Brunch",        desc:"Website restoran premium bahasa Inggris dengan halaman menu, galeri, reservasi, tentang, dan kontak.",                     url:"https://amber.coderaft.web.id",    color:"from-yellow-700 to-amber-800",   emoji:"🍳",  cat:"Landing Page", lang:"en", pageType:"multi", tags:["Restaurant","English","Multi-Page"] },
+  { title:"Voyaje",            subcat:"Landing Page — Travel App",             desc:"Landing page aplikasi travel berbahasa Inggris dengan 7 halaman: Fitur, Galeri, Testimoni, Harga, Kontak.",                url:"https://voyaje.coderaft.web.id",   color:"from-teal-500 to-cyan-600",      emoji:"✈️", cat:"Landing Page", lang:"en", pageType:"multi", tags:["Travel","English","App"] },
+  { title:"Batik Nala",        subcat:"Landing Page — Fashion & UMKM",         desc:"Toko batik premium dengan koleksi produk, cara pemesanan, testimoni, dan CTA WhatsApp yang optimal.",                     url:"https://batik.coderaft.web.id",    color:"from-indigo-600 to-violet-600",  emoji:"🪡",  cat:"Landing Page", lang:"id", pageType:"satu",  tags:["Fashion","UMKM","E-commerce"] },
+];
+
+const FILTERS = [
+  { key:"semua",     label:"Semua" },
+  { key:"landing",   label:"Landing Page" },
+  { key:"dashboard", label:"Dashboard" },
+  { key:"satu",      label:"Satu Halaman" },
+  { key:"multi",     label:"Multi Halaman" },
 ];
 
 const catStyle = {
-  "Landing Page": { bg: "rgba(139,92,246,0.2)",  text: "#c4b5fd", border: "rgba(139,92,246,0.35)" },
-  "Web App":      { bg: "rgba(56,189,248,0.2)",  text: "#7dd3fc", border: "rgba(56,189,248,0.35)" },
+  "Landing Page": { bg:"rgba(139,92,246,0.2)", text:"#c4b5fd", border:"rgba(139,92,246,0.35)" },
+  "Dashboard":    { bg:"rgba(56,189,248,0.2)", text:"#7dd3fc", border:"rgba(56,189,248,0.35)" },
 };
 
+function FilterBtn({ f, active, setActive }) {
+  const isActive = active === f.key;
+  return (
+    <button onClick={() => setActive(f.key)}
+      style={{
+        display:"flex", alignItems:"center", gap:"6px",
+        padding:"8px 16px", borderRadius:"11px",
+        fontSize:"12px", fontWeight:700, cursor:"pointer",
+        fontFamily:"inherit", transition:"all .25s",
+        background: isActive
+          ? "linear-gradient(135deg,#7c3aed,#a78bfa)"
+          : "transparent",
+        color: isActive ? "#fff" : "rgba(240,244,255,0.45)",
+        border: "none",
+        boxShadow: isActive
+          ? "0 4px 20px rgba(124,58,237,0.4), inset 0 1px 0 rgba(255,255,255,0.15)"
+          : "none",
+        transform: isActive ? "scale(1.02)" : "scale(1)",
+        whiteSpace:"nowrap",
+      }}
+      onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "rgba(240,244,255,0.85)"; e.currentTarget.style.background = isActive ? "linear-gradient(135deg,#7c3aed,#a78bfa)" : "rgba(255,255,255,0.06)"; }}
+      onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = "rgba(240,244,255,0.45)"; e.currentTarget.style.background = "transparent"; } }}>
+      <span style={{ fontSize:"13px", opacity: isActive ? 1 : 0.6 }}>{f.icon}</span>
+      {f.label}
+      {isActive && (
+        <span style={{ width:"5px", height:"5px", borderRadius:"50%", background:"rgba(255,255,255,0.7)", flexShrink:0, marginLeft:"2px" }}/>
+      )}
+    </button>
+  );
+}
+
 export default function Portofolio() {
+  const [active, setActive] = useState("semua");
+
+  const filtered = demos.filter(d => {
+    if (active === "semua")     return true;
+    if (active === "landing")   return d.cat === "Landing Page";
+    if (active === "dashboard") return d.cat === "Dashboard";
+    if (active === "satu")      return d.pageType === "satu";
+    if (active === "multi")     return d.pageType === "multi";
+    return true;
+  });
+
   return (
     <section id="portofolio" className="py-16 md:py-24" style={{ background: "#06040f" }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -79,17 +83,46 @@ export default function Portofolio() {
               </span>
             </h2>
           </div>
-          <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-2 font-bold text-sm transition-all hover:gap-3"
-            style={{ color: "#a78bfa", textDecoration: "none" }}>
-            Lihat semua demo →
-          </a>
         </div>
 
-        {/* Cards Grid — same style as coderaft-demos catalog */}
+        {/* Filter bar — premium grouped design */}
+        <div style={{ marginBottom:"36px" }}>
+          {/* Main container */}
+          <div style={{
+            display:"inline-flex", flexWrap:"wrap", gap:"4px",
+            padding:"5px", borderRadius:"16px",
+            background:"rgba(255,255,255,0.03)",
+            border:"1px solid rgba(167,139,250,0.12)",
+            backdropFilter:"blur(12px)",
+            boxShadow:"0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
+          }}>
+            {/* Group 1: Tipe */}
+            {[
+              { key:"semua",     label:"Semua",        icon:"✦" },
+              { key:"landing",   label:"Landing Page",  icon:"🌐" },
+              { key:"dashboard", label:"Dashboard",     icon:"📊" },
+            ].map(f => (
+              <FilterBtn key={f.key} f={f} active={active} setActive={setActive}/>
+            ))}
+
+            {/* Divider */}
+            <div style={{ width:"1px", background:"rgba(167,139,250,0.2)", margin:"6px 4px", flexShrink:0 }}/>
+
+            {/* Group 2: Struktur halaman */}
+            {[
+              { key:"satu",  label:"Satu Halaman",  icon:"□" },
+              { key:"multi", label:"Multi Halaman", icon:"⊞" },
+            ].map(f => (
+              <FilterBtn key={f.key} f={f} active={active} setActive={setActive}/>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Cards Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-5">
-          {demos.map((d) => {
-            const cs = catStyle[d.cat];
+          {filtered.map((d) => {
+            const cs = catStyle[d.cat] || catStyle["Landing Page"];
             return (
               <a key={d.title} href={d.url} target="_blank" rel="noopener noreferrer"
                 style={{ textDecoration: "none", display: "block" }}>
@@ -128,13 +161,13 @@ export default function Portofolio() {
                       {d.lang === "en" ? "🇺🇸" : "🇮🇩"}
                     </div>
 
-                    {/* Cat + Live badge */}
-                    <div style={{ position: "absolute", top: "12px", right: "12px", zIndex: 2, display: "flex", gap: "6px" }}>
-                      <span style={{ fontSize: "11px", fontWeight: 700, padding: "4px 10px", borderRadius: "100px", background: cs.bg, color: cs.text, border: `1px solid ${cs.border}`, backdropFilter: "blur(8px)" }}>
+                    {/* Badges: cat + page type */}
+                    <div style={{ position:"absolute", top:"12px", right:"12px", zIndex:2, display:"flex", flexDirection:"column", gap:"4px", alignItems:"flex-end" }}>
+                      <span style={{ fontSize:"10px", fontWeight:700, padding:"3px 9px", borderRadius:"100px", background:cs.bg, color:cs.text, border:`1px solid ${cs.border}`, backdropFilter:"blur(8px)", whiteSpace:"nowrap" }}>
                         {d.cat}
                       </span>
-                      <span style={{ fontSize: "11px", fontWeight: 700, padding: "4px 10px", borderRadius: "100px", background: "rgba(16,185,129,0.2)", color: "#6ee7b7", border: "1px solid rgba(16,185,129,0.35)", backdropFilter: "blur(8px)" }}>
-                        LIVE ●
+                      <span style={{ fontSize:"10px", fontWeight:700, padding:"3px 9px", borderRadius:"100px", background: d.pageType==="multi" ? "rgba(99,102,241,0.2)" : "rgba(16,185,129,0.15)", color: d.pageType==="multi" ? "#a5b4fc" : "#6ee7b7", border: d.pageType==="multi" ? "1px solid rgba(99,102,241,0.3)" : "1px solid rgba(16,185,129,0.25)", backdropFilter:"blur(8px)", whiteSpace:"nowrap" }}>
+                        {d.pageType === "multi" ? "Multi Halaman" : "Satu Halaman"}
                       </span>
                     </div>
 
@@ -177,75 +210,65 @@ export default function Portofolio() {
             );
           })}
 
-          {/* Lihat Semua Demo — style unik, bukan card biasa */}
-          <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
-            style={{ textDecoration: "none", display: "block", height: "100%" }}>
-            <div
-              style={{
-                borderRadius: "16px", overflow: "hidden", cursor: "pointer",
-                height: "100%", display: "flex", flexDirection: "column",
-                position: "relative",
-                background: "linear-gradient(155deg,#1e0a3c 0%,#0f0621 40%,#1a0535 100%)",
-                border: "1px solid rgba(167,139,250,0.2)",
-                transition: "all 0.3s ease",
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.border = "1px solid rgba(167,139,250,0.5)";
-                e.currentTarget.style.boxShadow = "0 24px 64px rgba(124,58,237,0.25)";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.border = "1px solid rgba(167,139,250,0.2)";
-                e.currentTarget.style.boxShadow = "none";
-              }}>
+        </div>
 
-              {/* Decorative glows */}
-              <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "160px", height: "160px", borderRadius: "50%", background: "radial-gradient(circle,rgba(124,58,237,0.35),transparent 70%)", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", bottom: "-20px", left: "-20px", width: "120px", height: "120px", borderRadius: "50%", background: "radial-gradient(circle,rgba(190,24,93,0.2),transparent 70%)", pointerEvents: "none" }} />
+        {/* CTA bar — selalu muncul, di luar grid */}
+        <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
+          style={{ textDecoration: "none", display: "block", marginTop: "16px" }}>
+          <div
+            style={{
+              borderRadius: "16px", overflow: "hidden", position: "relative",
+              background: "linear-gradient(135deg,#1e0a3c 0%,#0f0621 60%,#1a0535 100%)",
+              border: "1px solid rgba(167,139,250,0.2)",
+              transition: "all 0.3s ease",
+            }}
+            onMouseEnter={e => {
+              e.currentTarget.style.border = "1px solid rgba(167,139,250,0.5)";
+              e.currentTarget.style.boxShadow = "0 16px 48px rgba(124,58,237,0.2)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.border = "1px solid rgba(167,139,250,0.2)";
+              e.currentTarget.style.boxShadow = "none";
+            }}>
 
-              {/* Top stripe accent */}
-              <div style={{ height: "3px", background: "linear-gradient(90deg,#7c3aed,#ec4899,#f97316,transparent)", flexShrink: 0 }} />
+            {/* Decorative glows */}
+            <div style={{ position:"absolute", top:"-40px", right:"60px", width:"200px", height:"200px", borderRadius:"50%", background:"radial-gradient(circle,rgba(124,58,237,0.25),transparent 70%)", pointerEvents:"none" }}/>
+            <div style={{ position:"absolute", bottom:"-30px", left:"30%", width:"160px", height:"160px", borderRadius:"50%", background:"radial-gradient(circle,rgba(190,24,93,0.15),transparent 70%)", pointerEvents:"none" }}/>
 
-              {/* Main content */}
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "28px 24px 24px", position: "relative", zIndex: 1 }}>
+            {/* Top stripe */}
+            <div style={{ height:"3px", background:"linear-gradient(90deg,#7c3aed,#ec4899,#f97316,transparent)" }}/>
 
-                {/* Big text headline — no gradient clip to avoid rendering bug */}
-                <div style={{ fontSize: "clamp(1.8rem,3.5vw,2.4rem)", fontWeight: 900, lineHeight: "1.15", letterSpacing: "-0.03em", marginBottom: "16px", color: "#f0f4ff" }}>
-                  Masih ada<br />
-                  <span style={{ color: "#a78bfa" }}>lebih banyak</span><br />
-                  karya kami.
-                </div>
-
-                {/* Tags */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "16px" }}>
-                  {["Landing Page", "Dashboard", "🇮🇩 Indonesia", "🇺🇸 English"].map(t => (
-                    <span key={t} style={{ fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "100px", background: "rgba(167,139,250,0.1)", color: "rgba(167,139,250,0.7)", border: "1px solid rgba(167,139,250,0.15)" }}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <p style={{ fontSize: "13px", lineHeight: "1.6", color: "rgba(240,244,255,0.35)", marginBottom: "0" }}>
-                  Berbagai style, industri, dan stack berbeda — semuanya bisa dibuka & dicoba langsung.
-                </p>
-
-                {/* CTA — push to bottom */}
-                <div style={{ marginTop: "auto", paddingTop: "20px" }}>
-                  <div style={{
-                    display: "flex", alignItems: "center", justifyContent: "space-between",
-                    padding: "12px 16px", borderRadius: "12px",
-                    background: "linear-gradient(135deg,rgba(124,58,237,0.25),rgba(190,24,93,0.15))",
-                    border: "1px solid rgba(167,139,250,0.2)",
-                  }}>
-                    <span style={{ fontSize: "13px", fontWeight: 800, color: "#c4b5fd" }}>Jelajahi Katalog</span>
-                    <span style={{ fontSize: "18px", color: "#a78bfa" }}>→</span>
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"16px", padding:"24px 28px", position:"relative", zIndex:1 }}>
+              {/* Left */}
+              <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
+                <div>
+                  <div style={{ fontSize:"18px", fontWeight:900, color:"#f0f4ff", letterSpacing:"-0.02em" }}>
+                    Masih ada lebih banyak karya kami.{" "}
+                    <span style={{ color:"#a78bfa" }}>20+ demo siap lihat.</span>
+                  </div>
+                  <div style={{ fontSize:"13px", color:"rgba(240,244,255,0.35)", marginTop:"4px" }}>
+                    Landing Page, Dashboard, Bahasa Indonesia & English — semuanya bisa dicoba langsung.
                   </div>
                 </div>
+                <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
+                  {["Landing Page","Dashboard","🇮🇩 ID","🇺🇸 EN"].map(t=>(
+                    <span key={t} style={{ fontSize:"11px", fontWeight:600, padding:"3px 10px", borderRadius:"100px", background:"rgba(167,139,250,0.1)", color:"rgba(167,139,250,0.65)", border:"1px solid rgba(167,139,250,0.15)", whiteSpace:"nowrap" }}>{t}</span>
+                  ))}
+                </div>
+              </div>
+              {/* Right CTA */}
+              <div style={{
+                display:"flex", alignItems:"center", gap:"10px",
+                padding:"12px 24px", borderRadius:"12px", flexShrink:0,
+                background:"linear-gradient(135deg,rgba(124,58,237,0.3),rgba(190,24,93,0.2))",
+                border:"1px solid rgba(167,139,250,0.25)",
+              }}>
+                <span style={{ fontSize:"14px", fontWeight:800, color:"#c4b5fd", whiteSpace:"nowrap" }}>Jelajahi Katalog Demo</span>
+                <span style={{ fontSize:"20px", color:"#a78bfa" }}>→</span>
               </div>
             </div>
-          </a>
-        </div>
+          </div>
+        </a>
       </div>
     </section>
   );
