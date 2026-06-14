@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 
 const demos = [
   { title:"Nusantara Kitchen", subcat:"Landing Page — Restoran & Kuliner",    desc:"Website restoran modern dengan hero full-screen, menu produk, galeri, testimoni, dan reservasi via WhatsApp.",            url:"https://resto.coderaft.web.id",    color:"from-amber-600 to-orange-600",   emoji:"🍽",  cat:"Landing Page", lang:"id", pageType:"satu",  tags:["Restoran","WhatsApp","Galeri"] },
@@ -10,61 +9,13 @@ const demos = [
   { title:"Amber & Co.",       subcat:"Landing Page — Coffee & Brunch",        desc:"Website restoran premium bahasa Inggris dengan halaman menu, galeri, reservasi, tentang, dan kontak.",                     url:"https://amber.coderaft.web.id",    color:"from-yellow-700 to-amber-800",   emoji:"🍳",  cat:"Landing Page", lang:"en", pageType:"multi", tags:["Restaurant","English","Multi-Page"] },
 ];
 
-const FILTERS = [
-  { key:"semua",     label:"Semua" },
-  { key:"landing",   label:"Landing Page" },
-  { key:"dashboard", label:"Dashboard" },
-  { key:"satu",      label:"Satu Halaman" },
-  { key:"multi",     label:"Multi Halaman" },
-];
-
 const catStyle = {
   "Landing Page": { bg:"rgba(139,92,246,0.2)", text:"#c4b5fd", border:"rgba(139,92,246,0.35)" },
   "Dashboard":    { bg:"rgba(56,189,248,0.2)", text:"#7dd3fc", border:"rgba(56,189,248,0.35)" },
 };
 
-function FilterBtn({ f, active, setActive }) {
-  const isActive = active === f.key;
-  return (
-    <button onClick={() => setActive(f.key)}
-      style={{
-        display:"flex", alignItems:"center", gap:"6px",
-        padding:"8px 16px", borderRadius:"11px",
-        fontSize:"12px", fontWeight:700, cursor:"pointer",
-        fontFamily:"inherit", transition:"all .25s",
-        background: isActive
-          ? "linear-gradient(135deg,#7c3aed,#a78bfa)"
-          : "transparent",
-        color: isActive ? "#fff" : "rgba(240,244,255,0.45)",
-        border: "none",
-        boxShadow: isActive
-          ? "0 4px 20px rgba(124,58,237,0.4), inset 0 1px 0 rgba(255,255,255,0.15)"
-          : "none",
-        transform: isActive ? "scale(1.02)" : "scale(1)",
-        whiteSpace:"nowrap",
-      }}
-      onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = "rgba(240,244,255,0.85)"; e.currentTarget.style.background = isActive ? "linear-gradient(135deg,#7c3aed,#a78bfa)" : "rgba(255,255,255,0.06)"; }}
-      onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = "rgba(240,244,255,0.45)"; e.currentTarget.style.background = "transparent"; } }}>
-      <span style={{ fontSize:"13px", opacity: isActive ? 1 : 0.6 }}>{f.icon}</span>
-      {f.label}
-      {isActive && (
-        <span style={{ width:"5px", height:"5px", borderRadius:"50%", background:"rgba(255,255,255,0.7)", flexShrink:0, marginLeft:"2px" }}/>
-      )}
-    </button>
-  );
-}
-
 export default function Portofolio() {
-  const [active, setActive] = useState("semua");
-
-  const filtered = demos.filter(d => {
-    if (active === "semua")     return true;
-    if (active === "landing")   return d.cat === "Landing Page";
-    if (active === "dashboard") return d.cat === "Dashboard";
-    if (active === "satu")      return d.pageType === "satu";
-    if (active === "multi")     return d.pageType === "multi";
-    return true;
-  });
+  const filtered = demos;
 
   return (
     <section id="portofolio" className="py-16 md:py-24" style={{ background: "#06040f" }}>
@@ -81,40 +32,6 @@ export default function Portofolio() {
               </span>
             </h2>
           </div>
-        </div>
-
-        {/* Filter bar — premium grouped design */}
-        <div style={{ marginBottom:"36px" }}>
-          {/* Main container */}
-          <div style={{
-            display:"inline-flex", flexWrap:"wrap", gap:"4px",
-            padding:"5px", borderRadius:"16px",
-            background:"rgba(255,255,255,0.03)",
-            border:"1px solid rgba(167,139,250,0.12)",
-            backdropFilter:"blur(12px)",
-            boxShadow:"0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)",
-          }}>
-            {/* Group 1: Tipe */}
-            {[
-              { key:"semua",     label:"Semua",        icon:"✦" },
-              { key:"landing",   label:"Landing Page",  icon:"🌐" },
-              { key:"dashboard", label:"Dashboard",     icon:"📊" },
-            ].map(f => (
-              <FilterBtn key={f.key} f={f} active={active} setActive={setActive}/>
-            ))}
-
-            {/* Divider */}
-            <div style={{ width:"1px", background:"rgba(167,139,250,0.2)", margin:"6px 4px", flexShrink:0 }}/>
-
-            {/* Group 2: Struktur halaman */}
-            {[
-              { key:"satu",  label:"Satu Halaman",  icon:"□" },
-              { key:"multi", label:"Multi Halaman", icon:"⊞" },
-            ].map(f => (
-              <FilterBtn key={f.key} f={f} active={active} setActive={setActive}/>
-            ))}
-          </div>
-
         </div>
 
         {/* Cards Grid */}
@@ -210,59 +127,28 @@ export default function Portofolio() {
 
         </div>
 
-        {/* CTA bar — selalu muncul, di luar grid */}
-        <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer"
-          style={{ textDecoration: "none", display: "block", marginTop: "16px" }}>
-          <div
-            style={{
-              borderRadius: "16px", overflow: "hidden", position: "relative",
-              background: "linear-gradient(135deg,#1e0a3c 0%,#0f0621 60%,#1a0535 100%)",
-              border: "1px solid rgba(167,139,250,0.2)",
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.border = "1px solid rgba(167,139,250,0.5)";
-              e.currentTarget.style.boxShadow = "0 16px 48px rgba(124,58,237,0.2)";
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.border = "1px solid rgba(167,139,250,0.2)";
-              e.currentTarget.style.boxShadow = "none";
-            }}>
+        {/* CTA — Neon Glow */}
+        <a href="https://demos.coderaft.web.id" target="_blank" rel="noopener noreferrer" style={{ textDecoration:"none", display:"block", marginTop:"16px" }}>
+          <div style={{ borderRadius:"16px", overflow:"hidden", position:"relative", background:"rgba(12,4,28,0.95)", border:"1.5px solid #7c3aed", boxShadow:"0 0 40px rgba(124,58,237,0.25), inset 0 0 40px rgba(124,58,237,0.05)", transition:"all .3s" }}
+            onMouseEnter={e=>{e.currentTarget.style.boxShadow="0 0 64px rgba(124,58,237,0.5), inset 0 0 40px rgba(124,58,237,0.1)";}}
+            onMouseLeave={e=>{e.currentTarget.style.boxShadow="0 0 40px rgba(124,58,237,0.25), inset 0 0 40px rgba(124,58,237,0.05)";}}>
+            {/* Glow orbs */}
+            <div style={{ position:"absolute", top:"-30px", left:"15%", width:"220px", height:"220px", borderRadius:"50%", background:"radial-gradient(circle,rgba(124,58,237,0.3),transparent 70%)", pointerEvents:"none" }}/>
+            <div style={{ position:"absolute", bottom:"-20px", right:"10%", width:"180px", height:"180px", borderRadius:"50%", background:"radial-gradient(circle,rgba(236,72,153,0.2),transparent 70%)", pointerEvents:"none" }}/>
+            <div style={{ position:"relative", zIndex:1, padding:"36px 32px", textAlign:"center" }}>
 
-            {/* Decorative glows */}
-            <div style={{ position:"absolute", top:"-40px", right:"60px", width:"200px", height:"200px", borderRadius:"50%", background:"radial-gradient(circle,rgba(124,58,237,0.25),transparent 70%)", pointerEvents:"none" }}/>
-            <div style={{ position:"absolute", bottom:"-30px", left:"30%", width:"160px", height:"160px", borderRadius:"50%", background:"radial-gradient(circle,rgba(190,24,93,0.15),transparent 70%)", pointerEvents:"none" }}/>
-
-            {/* Top stripe */}
-            <div style={{ height:"3px", background:"linear-gradient(90deg,#7c3aed,#ec4899,#f97316,transparent)" }}/>
-
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"16px", padding:"24px 28px", position:"relative", zIndex:1 }}>
-              {/* Left */}
-              <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
-                <div>
-                  <div style={{ fontSize:"18px", fontWeight:900, color:"#f0f4ff", letterSpacing:"-0.02em" }}>
-                    Masih ada lebih banyak karya kami.{" "}
-                    <span style={{ color:"#a78bfa" }}>20+ demo siap lihat.</span>
-                  </div>
-                  <div style={{ fontSize:"13px", color:"rgba(240,244,255,0.35)", marginTop:"4px" }}>
-                    Landing Page, Dashboard, Bahasa Indonesia & English — semuanya bisa dicoba langsung.
-                  </div>
-                </div>
-                <div style={{ display:"flex", gap:"6px", flexWrap:"wrap" }}>
-                  {["Landing Page","Dashboard","🇮🇩 ID","🇺🇸 EN"].map(t=>(
-                    <span key={t} style={{ fontSize:"11px", fontWeight:600, padding:"3px 10px", borderRadius:"100px", background:"rgba(167,139,250,0.1)", color:"rgba(167,139,250,0.65)", border:"1px solid rgba(167,139,250,0.15)", whiteSpace:"nowrap" }}>{t}</span>
-                  ))}
-                </div>
+              {/* Headline */}
+              <div style={{ fontSize:'clamp(24px,4vw,40px)', fontWeight:900, lineHeight:1.15, marginBottom:'10px', letterSpacing:'-0.03em', color:'#f0f4ff' }}>
+                Butuh inspirasi lebih?
               </div>
-              {/* Right CTA */}
-              <div style={{
-                display:"flex", alignItems:"center", gap:"10px",
-                padding:"12px 24px", borderRadius:"12px", flexShrink:0,
-                background:"linear-gradient(135deg,rgba(124,58,237,0.3),rgba(190,24,93,0.2))",
-                border:"1px solid rgba(167,139,250,0.25)",
-              }}>
-                <span style={{ fontSize:"14px", fontWeight:800, color:"#c4b5fd", whiteSpace:"nowrap" }}>Jelajahi Katalog Demo</span>
-                <span style={{ fontSize:"20px", color:"#a78bfa" }}>→</span>
+              <div style={{ fontSize:'14px', fontWeight:400, color:'rgba(167,139,250,0.6)', marginBottom:'24px', lineHeight:1.6 }}>
+                Katalog kami punya <span style={{ color:'#c4b5fd', fontWeight:700 }}>28+ demo</span>{" "}siap lihat — landing page, dashboard, ID &amp; EN, berbagai industri.
+              </div>
+              {/* CTA */}
+              <div style={{ display:'inline-flex', alignItems:'center', gap:'10px', padding:'13px 32px', borderRadius:'50px', border:'1.5px solid #a78bfa', color:'#a78bfa', fontSize:'13px', fontWeight:800, letterSpacing:'0.06em', background:'rgba(124,58,237,0.1)', transition:'all .25s' }}
+                onMouseEnter={e=>{e.currentTarget.style.background='#7c3aed';e.currentTarget.style.color='#fff';e.currentTarget.style.borderColor='#7c3aed';e.currentTarget.style.boxShadow='0 4px 20px rgba(124,58,237,0.5)';}}
+                onMouseLeave={e=>{e.currentTarget.style.background='rgba(124,58,237,0.1)';e.currentTarget.style.color='#a78bfa';e.currentTarget.style.borderColor='#a78bfa';e.currentTarget.style.boxShadow='none';}}>
+                🗂️ &nbsp;Lihat Semua Demo
               </div>
             </div>
           </div>
