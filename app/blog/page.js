@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { articles, categories } from "./data";
 
@@ -22,8 +22,16 @@ const catColors = {
 };
 
 export default function BlogPage() {
-  const [cat,    setCat]    = useState("Semua");
-  const [search, setSearch] = useState("");
+  const [cat,      setCat]    = useState("Semua");
+  const [search,   setSearch] = useState("");
+  const [isMobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const filtered = articles.filter(a=>
     (cat==="Semua"||a.category===cat) &&
@@ -35,7 +43,7 @@ export default function BlogPage() {
   const tags = ["UMKM","SEO","Landing Page","Website","Digital Marketing","E-Commerce","Harga Website","Google","WhatsApp","Konversi"];
 
   return (
-    <div style={{ background:BG }}>
+    <div style={{ background:BG, overflowX:"hidden" }}>
 
       {/* ── Dark header ── */}
       <div style={{ background:"rgba(255,255,255,0.02)", borderBottom:`1px solid ${BOR}` }}>
@@ -52,10 +60,10 @@ export default function BlogPage() {
             </p>
           </div>
           {/* Search */}
-          <div style={{ position:"relative" }}>
+          <div style={{ position:"relative", width: isMobile ? "100%" : "auto" }}>
             <span style={{ position:"absolute", left:"12px", top:"50%", transform:"translateY(-50%)", color:MUT, fontSize:"13px" }}>⌕</span>
             <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Cari artikel..."
-              style={{ paddingLeft:"34px", paddingRight:"14px", paddingTop:"10px", paddingBottom:"10px", background:"rgba(255,255,255,0.05)", border:`1px solid ${BOR}`, borderRadius:"8px", color:TEXT, fontSize:"13px", outline:"none", width:"220px" }}
+              style={{ paddingLeft:"34px", paddingRight:"14px", paddingTop:"10px", paddingBottom:"10px", background:"rgba(255,255,255,0.05)", border:`1px solid ${BOR}`, borderRadius:"8px", color:TEXT, fontSize:"13px", outline:"none", width: isMobile ? "100%" : "220px", boxSizing:"border-box" }}
               onFocus={e=>e.target.style.borderColor="rgba(139,92,246,0.4)"}
               onBlur={e=>e.target.style.borderColor=BOR} />
           </div>
@@ -64,21 +72,35 @@ export default function BlogPage() {
 
       {/* ── Main layout ── */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 272px", gap:"24px", alignItems:"start" }}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_272px]" style={{ gap:"24px", alignItems:"start" }}>
 
           {/* ── LEFT ── */}
           <div>
 
+            {/* Mobile: category chips */}
+            <div className="flex md:hidden" style={{ gap:"6px", overflowX:"auto", paddingBottom:"6px", marginBottom:"16px", scrollbarWidth:"none" }}>
+              {["Semua",...categories].map(c=>(
+                <button key={c} onClick={()=>setCat(c)}
+                  style={{ flexShrink:0, padding:"6px 14px", borderRadius:"20px", fontSize:"11px", fontWeight:700, cursor:"pointer", border:"none",
+                    background: cat===c ? "rgba(139,92,246,0.2)" : "rgba(255,255,255,0.06)",
+                    color: cat===c ? VIO : MUT,
+                    outline: cat===c ? `1px solid rgba(139,92,246,0.4)` : "none",
+                  }}>
+                  {c}
+                </button>
+              ))}
+            </div>
+
             {/* Featured — Horizontal Editorial Split */}
             {featured && (
               <Link href={`/blog/${featured.slug}`} style={{ textDecoration:"none", display:"block", marginBottom:"22px" }}>
-                <div style={{ display:"flex", borderRadius:"20px", overflow:"hidden", border:"1px solid rgba(255,255,255,0.07)", cursor:"pointer", transition:"all 0.2s", minHeight:"220px" }}
+                <div className="flex flex-col md:flex-row" style={{ borderRadius:"20px", overflow:"hidden", border:"1px solid rgba(255,255,255,0.07)", cursor:"pointer", transition:"all 0.2s" }}
                   onMouseEnter={e=>{ e.currentTarget.style.borderColor="rgba(139,92,246,0.35)"; e.currentTarget.style.boxShadow="0 16px 48px rgba(139,92,246,0.18)"; }}
                   onMouseLeave={e=>{ e.currentTarget.style.borderColor="rgba(255,255,255,0.07)"; e.currentTarget.style.boxShadow="none"; }}>
 
                   {/* Left — Gradient panel */}
-                  <div className={`bg-gradient-to-br ${featured.cover} flex-shrink-0 flex items-center justify-center`}
-                    style={{ width:"38%", position:"relative", overflow:"hidden" }}>
+                  <div className={`bg-gradient-to-br ${featured.cover} flex-shrink-0 flex items-center justify-center w-full h-[180px] md:w-[38%] md:h-auto`}
+                    style={{ position:"relative", overflow:"hidden" }}>
                     <div style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.15)" }}/>
                     <div style={{ position:"absolute", bottom:"-20px", right:"-20px", width:"140px", height:"140px", borderRadius:"50%", background:"rgba(255,255,255,0.08)" }}/>
                     <span style={{ fontSize:"72px", position:"relative", zIndex:1, filter:"drop-shadow(0 8px 24px rgba(0,0,0,0.4))" }}>
@@ -93,26 +115,29 @@ export default function BlogPage() {
                   </div>
 
                   {/* Right — Content panel */}
-                  <div style={{ flex:1, background:"rgba(255,255,255,0.03)", padding:"24px 26px", display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+                  <div className="p-4 md:p-6"
+                    style={{ flex:1, minWidth:0, overflow:"hidden", background:"rgba(255,255,255,0.03)", display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
                     <div>
                       {/* Badge */}
-                      <div style={{ display:"inline-flex", alignItems:"center", gap:"5px", background:"rgba(139,92,246,0.15)", border:"1px solid rgba(139,92,246,0.3)", borderRadius:"20px", padding:"3px 10px", marginBottom:"14px" }}>
+                      <div style={{ display:"inline-flex", alignItems:"center", gap:"5px", background:"rgba(139,92,246,0.15)", border:"1px solid rgba(139,92,246,0.3)", borderRadius:"20px", padding:"3px 10px", marginBottom:"12px" }}>
                         <span style={{ color:VIO, fontSize:"9px", fontWeight:700, letterSpacing:"0.1em" }}>★ ARTIKEL PILIHAN</span>
                       </div>
                       {/* Title */}
-                      <h2 style={{ color:TEXT, fontWeight:900, fontSize:"clamp(1rem,2.5vw,1.45rem)", letterSpacing:"-0.02em", lineHeight:1.3, marginBottom:"10px" }}>
+                      <h2 className="text-[1.05rem] md:text-[1.35rem]"
+                        style={{ color:TEXT, fontWeight:900, letterSpacing:"-0.02em", lineHeight:1.3, marginBottom:"8px", wordBreak:"break-word" }}>
                         {featured.title}
                       </h2>
                       {/* Excerpt */}
-                      <p style={{ color:MUT, fontSize:"12px", lineHeight:1.65, display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                      <p style={{ color:MUT, fontSize:"12px", lineHeight:1.65, display:"-webkit-box", WebkitLineClamp:3, WebkitBoxOrient:"vertical", overflow:"hidden", wordBreak:"break-word" }}>
                         {featured.excerpt}
                       </p>
                     </div>
                     {/* Meta + CTA */}
-                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", paddingTop:"14px", borderTop:"1px solid rgba(255,255,255,0.06)", marginTop:"14px" }}>
+                    <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"8px", paddingTop:"12px", borderTop:"1px solid rgba(255,255,255,0.06)", marginTop:"12px" }}>
                       <span style={{ color:"rgba(240,244,255,0.3)", fontSize:"11px" }}>{featured.date} · {featured.readTime}</span>
-                      <span style={{ background:`linear-gradient(135deg,#7c3aed,#ec4899)`, color:"#fff", fontSize:"11px", fontWeight:700, padding:"7px 16px", borderRadius:"20px" }}>
-                        Baca Selengkapnya →
+                      <span style={{ background:`linear-gradient(135deg,#7c3aed,#ec4899)`, color:"#fff", fontSize:"11px", fontWeight:700, padding:"6px 14px", borderRadius:"20px", flexShrink:0 }}>
+                        <span className="md:hidden">Baca →</span>
+                        <span className="hidden md:inline">Baca Selengkapnya →</span>
                       </span>
                     </div>
                   </div>
@@ -147,18 +172,18 @@ export default function BlogPage() {
                     </div>
 
                     {/* Right — content */}
-                    <div style={{ flex:1, padding:"12px 16px", display:"flex", flexDirection:"column", justifyContent:"space-between", overflow:"hidden" }}>
+                    <div style={{ flex:1, minWidth:0, padding:"12px 16px", display:"flex", flexDirection:"column", justifyContent:"space-between", overflow:"hidden" }}>
                       <div>
                         {/* Category */}
                         <span style={{ color:a.catColor, fontSize:"9px", fontWeight:700, textTransform:"uppercase", letterSpacing:"0.1em" }}>
                           {a.category}
                         </span>
                         {/* Title */}
-                        <h3 style={{ color:TEXT, fontWeight:700, fontSize:"13px", lineHeight:1.35, margin:"4px 0 5px", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                        <h3 style={{ color:TEXT, fontWeight:700, fontSize:"13px", lineHeight:1.35, margin:"4px 0 5px", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden", wordBreak:"break-word" }}>
                           {a.title}
                         </h3>
                         {/* Excerpt */}
-                        <p style={{ color:MUT, fontSize:"11px", lineHeight:1.5, margin:0, display:"-webkit-box", WebkitLineClamp:1, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+                        <p style={{ color:MUT, fontSize:"11px", lineHeight:1.5, margin:0, display:"-webkit-box", WebkitLineClamp:1, WebkitBoxOrient:"vertical", overflow:"hidden", wordBreak:"break-word" }}>
                           {a.excerpt}
                         </p>
                       </div>
@@ -186,7 +211,7 @@ export default function BlogPage() {
           </div>
 
           {/* ── RIGHT: Sidebar ── */}
-          <div style={{ position:"sticky", top:"80px", display:"flex", flexDirection:"column", gap:"14px" }}>
+          <div className="hidden md:flex" style={{ position:"sticky", top:"80px", flexDirection:"column", gap:"14px" }}>
 
             {/* Categories */}
             <div style={{ background:CARD, border:`1px solid ${BOR}`, borderRadius:"14px", overflow:"hidden" }}>

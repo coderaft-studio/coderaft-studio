@@ -10,10 +10,45 @@ const MUT  = "rgba(240,244,255,0.45)";
 const BOR  = "rgba(139,92,246,0.15)";
 const DIM  = "rgba(240,244,255,0.7)";
 
+function MobileToc({ toc, onSelect }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ background:"rgba(139,92,246,0.06)", border:`1px solid ${BOR}`, borderRadius:"12px", marginBottom:"24px", overflow:"hidden" }}>
+      <button onClick={()=>setOpen(!open)} style={{ width:"100%", display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px", background:"none", border:"none", cursor:"pointer" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:"8px" }}>
+          <div style={{ width:"3px", height:"14px", background:VIO, borderRadius:"2px" }}/>
+          <span style={{ color:TEXT, fontWeight:700, fontSize:"12px" }}>Daftar Isi</span>
+          <span style={{ color:MUT, fontSize:"11px" }}>({toc.length} bagian)</span>
+        </div>
+        <span style={{ color:VIO, fontSize:"12px" }}>{open ? "▲" : "▼"}</span>
+      </button>
+      {open && (
+        <div style={{ borderTop:`1px solid ${BOR}`, padding:"8px" }}>
+          {toc.map((t,i)=>(
+            <button key={i} onClick={()=>{ onSelect(i); setOpen(false); }}
+              style={{ width:"100%", display:"flex", alignItems:"flex-start", gap:"8px", padding:"8px 10px", borderRadius:"8px", border:"none", background:"transparent", cursor:"pointer", textAlign:"left" }}>
+              <span style={{ color:VIO, fontWeight:700, fontSize:"10px", flexShrink:0, marginTop:"2px" }}>{String(i+1).padStart(2,"0")}</span>
+              <span style={{ color:MUT, fontSize:"12px", lineHeight:1.4 }}>{t}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ArticleContent({ article, related }) {
   const [progress,  setProgress]  = useState(0);
   const [showTop,   setShowTop]   = useState(false);
   const [activeToc, setActiveToc] = useState(0);
+  const [isMobile,  setMobile]    = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const toc = article.content.filter(b=>b.type==="h2").map(b=>b.text);
 
@@ -59,14 +94,14 @@ export default function ArticleContent({ article, related }) {
         <div style={{ position:"absolute", top:"-40px", right:"-40px", width:"200px", height:"200px", borderRadius:"50%", background:"rgba(255,255,255,0.06)" }}/>
         <div style={{ position:"absolute", bottom:"-30px", left:"-30px", width:"150px", height:"150px", borderRadius:"50%", background:"rgba(255,255,255,0.04)" }}/>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 relative" style={{ zIndex:1 }}>
-          {/* Breadcrumb */}
-          <div style={{ display:"flex", alignItems:"center", gap:"6px", fontSize:"12px", marginBottom:"20px" }}>
-            <Link href="/blog" style={{ color:"rgba(255,255,255,0.65)", textDecoration:"none", fontWeight:600 }}>Blog</Link>
-            <span style={{ color:"rgba(255,255,255,0.35)" }}>›</span>
-            <span style={{ color:"rgba(255,255,255,0.5)", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", maxWidth:"200px" }}>{article.category}</span>
-          </div>
-          {/* Category + read time */}
-          <div style={{ display:"flex", gap:"8px", marginBottom:"16px", flexWrap:"wrap" }}>
+          {/* Category + read time + back button */}
+          <div style={{ display:"flex", alignItems:"center", gap:"8px", marginBottom:"16px", flexWrap:"wrap" }}>
+            <Link href="/blog"
+              style={{ display:"inline-flex", alignItems:"center", gap:"7px", background:"linear-gradient(135deg,#7c3aed,#ec4899)", color:"#fff", fontSize:"12px", fontWeight:800, padding:"7px 16px", borderRadius:"20px", textDecoration:"none", flexShrink:0, transition:"all 0.2s", boxShadow:"0 4px 16px rgba(124,58,237,0.5)", letterSpacing:"0.01em" }}
+              onMouseEnter={e=>{ e.currentTarget.style.boxShadow="0 6px 24px rgba(124,58,237,0.7)"; e.currentTarget.style.transform="translateY(-1px)"; }}
+              onMouseLeave={e=>{ e.currentTarget.style.boxShadow="0 4px 16px rgba(124,58,237,0.5)"; e.currentTarget.style.transform="translateY(0)"; }}>
+              ← Kembali ke Blog
+            </Link>
             <span style={{ background:article.catColor, color:"#fff", fontSize:"10px", fontWeight:700, padding:"4px 12px", borderRadius:"20px" }}>{article.category}</span>
             <span style={{ background:"rgba(255,255,255,0.15)", backdropFilter:"blur(8px)", color:"#fff", fontSize:"10px", fontWeight:600, padding:"4px 12px", borderRadius:"20px" }}>⏱ {article.readTime} baca</span>
           </div>
@@ -94,10 +129,15 @@ export default function ArticleContent({ article, related }) {
 
       {/* ── Main content layout ── */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 260px", gap:"32px", alignItems:"start" }}>
+        <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 260px", gap:"32px", alignItems:"start" }}>
 
           {/* ── LEFT: Article body ── */}
           <div>
+            {/* Mobile TOC — collapsible */}
+            {isMobile && toc.length > 0 && (
+              <MobileToc toc={toc} onSelect={scrollToToc} />
+            )}
+
             {/* Article text */}
             <div style={{ fontSize:"15px", lineHeight:1.85, color:DIM }}>
               {article.content.map((block,i)=>{
@@ -205,7 +245,7 @@ export default function ArticleContent({ article, related }) {
           </div>
 
           {/* ── RIGHT: Sidebar ── */}
-          <div style={{ position:"sticky", top:"72px", display:"flex", flexDirection:"column", gap:"14px" }}>
+          <div style={{ position:"sticky", top:"72px", display: isMobile ? "none" : "flex", flexDirection:"column", gap:"14px" }}>
 
             {/* Table of Contents */}
             {toc.length > 0 && (

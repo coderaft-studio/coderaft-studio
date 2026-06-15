@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const VIO  = "#a78bfa";
@@ -12,12 +12,12 @@ const CARD = "rgba(255,255,255,0.03)";
 
 /* ─── Tool components (dark theme) ─── */
 
-function QRTool() {
+function QRTool({ isMobile }) {
   const [url, setUrl]   = useState("https://coderaft.web.id");
   const [gen, setGen]   = useState("https://coderaft.web.id");
   const [copied,setCopied]=useState(false);
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"20px", alignItems:"start" }}>
+    <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:"20px", alignItems:"start" }}>
       <div className="space-y-3">
         <div style={{ color:MUT, fontSize:"11px", fontWeight:700, letterSpacing:"0.08em", textTransform:"uppercase", marginBottom:"6px" }}>URL atau Teks</div>
         <textarea value={url} onChange={e=>setUrl(e.target.value)} rows={3} placeholder="https://website-anda.com"
@@ -85,7 +85,7 @@ function WordTool() {
   );
 }
 
-function PassTool() {
+function PassTool({ isMobile }) {
   const [len,   setLen]   = useState(16);
   const [upper, setUpper] = useState(true);
   const [lower, setLower] = useState(true);
@@ -110,7 +110,7 @@ function PassTool() {
 
   return (
     <div className="space-y-4">
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px" }}>
+      <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:"16px" }}>
         <div>
           <div style={{ color:MUT, fontSize:"11px", fontWeight:700, letterSpacing:"0.08em", marginBottom:"8px" }}>PANJANG: {len} KARAKTER</div>
           <input type="range" min={6} max={32} value={len} onChange={e=>setLen(+e.target.value)}
@@ -149,7 +149,7 @@ function PassTool() {
   );
 }
 
-function UTMTool() {
+function UTMTool({ isMobile }) {
   const [f, setF] = useState({ url:"https://coderaft.web.id", source:"google", medium:"cpc", campaign:"promo-website-2026", term:"", content:"" });
   const [copied,setCopied]=useState(false);
   const ff = k=>e=>setF(p=>({...p,[k]:e.target.value}));
@@ -165,7 +165,7 @@ function UTMTool() {
   })();
   const copy=()=>{ navigator.clipboard.writeText(result); setCopied(true); setTimeout(()=>setCopied(false),2000); };
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"16px" }}>
+    <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:"16px" }}>
       <div className="space-y-3">
         {[{k:"url",l:"URL Website *",ph:"https://website.com"},{k:"source",l:"Source *",ph:"google / facebook"},{k:"medium",l:"Medium *",ph:"cpc / social / email"},{k:"campaign",l:"Nama Campaign *",ph:"promo-lebaran-2026"},{k:"term",l:"Term (opsional)",ph:"jasa web umkm"},{k:"content",l:"Content (opsional)",ph:"banner-atas"}].map(fi=>(
           <div key={fi.k}>
@@ -200,7 +200,7 @@ function UTMTool() {
   );
 }
 
-function ColorTool() {
+function ColorTool({ isMobile }) {
   const [color,   setColor]   = useState("#a78bfa");
   const [palette, setPalette] = useState(["#a78bfa","#ec4899","#7c3aed","#06b6d4","#f59e0b"]);
   const [copied,  setCopied]  = useState(null);
@@ -209,7 +209,7 @@ function ColorTool() {
   const add=()=>{ if(!palette.includes(color)&&palette.length<10) setPalette(p=>[...p,color]); };
   const copy=val=>{ navigator.clipboard.writeText(val); setCopied(val); setTimeout(()=>setCopied(null),1500); };
   return (
-    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"20px" }}>
+    <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap:"20px" }}>
       {/* Picker */}
       <div className="space-y-4">
         <div style={{ display:"flex", alignItems:"center", gap:"14px" }}>
@@ -253,15 +253,24 @@ function ColorTool() {
 
 /* ─── Tool config ─── */
 const TOOLS = [
-  { id:"qr",    icon:"🔗", label:"QR Code",       tagline:"Link ke QR instan",         color:"#06b6d4", component:<QRTool/>   },
-  { id:"word",  icon:"📝", label:"Word Counter",   tagline:"Analisis teks lengkap",     color:VIO,       component:<WordTool/> },
-  { id:"pass",  icon:"🔑", label:"Password",       tagline:"Password kuat & aman",      color:PINK,      component:<PassTool/> },
-  { id:"utm",   icon:"📊", label:"UTM Builder",    tagline:"Tracking campaign iklan",   color:"#f59e0b", component:<UTMTool/>  },
-  { id:"color", icon:"🎨", label:"Color Picker",   tagline:"Palette warna brand",       color:"#10b981", component:<ColorTool/>},
+  { id:"qr",    icon:"🔗", label:"QR Code",       tagline:"Link ke QR instan",         color:"#06b6d4", Component: QRTool    },
+  { id:"word",  icon:"📝", label:"Word Counter",   tagline:"Analisis teks lengkap",     color:VIO,       Component: WordTool  },
+  { id:"pass",  icon:"🔑", label:"Password",       tagline:"Password kuat & aman",      color:PINK,      Component: PassTool  },
+  { id:"utm",   icon:"📊", label:"UTM Builder",    tagline:"Tracking campaign iklan",   color:"#f59e0b", Component: UTMTool   },
+  { id:"color", icon:"🎨", label:"Color Picker",   tagline:"Palette warna brand",       color:"#10b981", Component: ColorTool },
 ];
 
 export default function ToolsPage() {
-  const [active, setActive] = useState("qr");
+  const [active,   setActive] = useState("qr");
+  const [isMobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   const tool = TOOLS.find(t=>t.id===active);
 
   return (
@@ -294,32 +303,50 @@ export default function ToolsPage() {
 
       {/* ── Tab selector + Tool area ── */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        <div style={{ display:"grid", gridTemplateColumns:"200px 1fr", gap:"20px", alignItems:"start" }}>
+        <div style={{ display:"grid", gridTemplateColumns: isMobile ? "1fr" : "200px 1fr", gap:"20px", alignItems:"start" }}>
 
           {/* Left: Tool selector */}
-          <div style={{ display:"flex", flexDirection:"column", gap:"4px", position:"sticky", top:"80px" }}>
-            {TOOLS.map(t=>(
-              <button key={t.id} onClick={()=>setActive(t.id)}
-                style={{ display:"flex", alignItems:"center", gap:"10px", padding:"11px 14px", borderRadius:"12px", border:"none", background:active===t.id?`rgba(139,92,246,0.12)`:"transparent", cursor:"pointer", textAlign:"left", transition:"all 0.15s", borderLeft:active===t.id?`3px solid ${t.color}`:"3px solid transparent" }}
-                onMouseEnter={e=>{ if(active!==t.id) e.currentTarget.style.background="rgba(255,255,255,0.04)"; }}
-                onMouseLeave={e=>{ if(active!==t.id) e.currentTarget.style.background="transparent"; }}>
-                <span style={{ fontSize:"20px", flexShrink:0 }}>{t.icon}</span>
-                <div>
-                  <div style={{ color:active===t.id?TEXT:MUT, fontWeight:active===t.id?700:500, fontSize:"13px" }}>{t.label}</div>
-                  <div style={{ color:active===t.id?t.color:MUT, fontSize:"10px", marginTop:"1px", opacity:active===t.id?1:0.6 }}>{t.tagline}</div>
-                </div>
-                {active===t.id && <div style={{ marginLeft:"auto", width:"6px", height:"6px", borderRadius:"50%", background:t.color, flexShrink:0, boxShadow:`0 0 8px ${t.color}` }}/>}
-              </button>
-            ))}
-
-            <div style={{ marginTop:"12px", padding:"14px", background:"rgba(255,255,255,0.03)", border:`1px solid ${BOR}`, borderRadius:"12px" }}>
-              <div style={{ color:VIO, fontSize:"10px", fontWeight:700, letterSpacing:"0.08em", marginBottom:"6px" }}>BUTUH LEBIH?</div>
-              <div style={{ color:MUT, fontSize:"11px", lineHeight:1.5, marginBottom:"10px" }}>Tools di atas gratis selamanya. Untuk kebutuhan bisnis lebih lanjut, kami siap membantu.</div>
-              <Link href="/hitung" style={{ textDecoration:"none", display:"block", textAlign:"center", background:`linear-gradient(135deg,${VIO2},${PINK})`, color:"#fff", fontSize:"11px", fontWeight:700, padding:"8px", borderRadius:"20px" }}>
-                Konsultasi Gratis →
-              </Link>
+          {isMobile ? (
+            /* Mobile: horizontal scrollable tabs */
+            <div style={{ display:"flex", gap:"8px", overflowX:"auto", paddingBottom:"4px", scrollbarWidth:"none" }}>
+              {TOOLS.map(t=>(
+                <button key={t.id} onClick={()=>setActive(t.id)}
+                  style={{ flexShrink:0, display:"flex", flexDirection:"column", alignItems:"center", gap:"4px", padding:"10px 14px", borderRadius:"12px", border:"none",
+                    background: active===t.id ? `rgba(139,92,246,0.12)` : "rgba(255,255,255,0.04)",
+                    cursor:"pointer", minWidth:"72px",
+                    borderBottom: active===t.id ? `2px solid ${t.color}` : "2px solid transparent",
+                  }}>
+                  <span style={{ fontSize:"22px" }}>{t.icon}</span>
+                  <span style={{ color: active===t.id ? TEXT : MUT, fontWeight: active===t.id ? 700 : 500, fontSize:"11px", whiteSpace:"nowrap" }}>{t.label}</span>
+                </button>
+              ))}
             </div>
-          </div>
+          ) : (
+            /* Desktop: vertical list */
+            <div style={{ display:"flex", flexDirection:"column", gap:"4px", position:"sticky", top:"80px" }}>
+              {TOOLS.map(t=>(
+                <button key={t.id} onClick={()=>setActive(t.id)}
+                  style={{ display:"flex", alignItems:"center", gap:"10px", padding:"11px 14px", borderRadius:"12px", border:"none", background:active===t.id?`rgba(139,92,246,0.12)`:"transparent", cursor:"pointer", textAlign:"left", transition:"all 0.15s", borderLeft:active===t.id?`3px solid ${t.color}`:"3px solid transparent" }}
+                  onMouseEnter={e=>{ if(active!==t.id) e.currentTarget.style.background="rgba(255,255,255,0.04)"; }}
+                  onMouseLeave={e=>{ if(active!==t.id) e.currentTarget.style.background="transparent"; }}>
+                  <span style={{ fontSize:"20px", flexShrink:0 }}>{t.icon}</span>
+                  <div>
+                    <div style={{ color:active===t.id?TEXT:MUT, fontWeight:active===t.id?700:500, fontSize:"13px" }}>{t.label}</div>
+                    <div style={{ color:active===t.id?t.color:MUT, fontSize:"10px", marginTop:"1px", opacity:active===t.id?1:0.6 }}>{t.tagline}</div>
+                  </div>
+                  {active===t.id && <div style={{ marginLeft:"auto", width:"6px", height:"6px", borderRadius:"50%", background:t.color, flexShrink:0, boxShadow:`0 0 8px ${t.color}` }}/>}
+                </button>
+              ))}
+
+              <div style={{ marginTop:"12px", padding:"14px", background:"rgba(255,255,255,0.03)", border:`1px solid ${BOR}`, borderRadius:"12px" }}>
+                <div style={{ color:VIO, fontSize:"10px", fontWeight:700, letterSpacing:"0.08em", marginBottom:"6px" }}>BUTUH LEBIH?</div>
+                <div style={{ color:MUT, fontSize:"11px", lineHeight:1.5, marginBottom:"10px" }}>Tools di atas gratis selamanya. Untuk kebutuhan bisnis lebih lanjut, kami siap membantu.</div>
+                <Link href="/hitung" style={{ textDecoration:"none", display:"block", textAlign:"center", background:`linear-gradient(135deg,${VIO2},${PINK})`, color:"#fff", fontSize:"11px", fontWeight:700, padding:"8px", borderRadius:"20px" }}>
+                  Konsultasi Gratis →
+                </Link>
+              </div>
+            </div>
+          )}
 
           {/* Right: Active tool */}
           {tool && (
@@ -341,7 +368,7 @@ export default function ToolsPage() {
               </div>
               {/* Tool content */}
               <div style={{ padding:"22px" }}>
-                {tool.component}
+                <tool.Component isMobile={isMobile} />
               </div>
             </div>
           )}

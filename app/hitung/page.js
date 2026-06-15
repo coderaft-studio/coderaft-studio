@@ -158,8 +158,8 @@ function ResultPage({ answers, onReset }) {
             <div key={s.step} style={{ flex:1, textAlign:"center", position:"relative" }}>
               {i<3 && <div style={{ position:"absolute", top:"14px", left:"50%", right:"-50%", height:"2px", background:`rgba(139,92,246,0.2)`, zIndex:0 }}/>}
               <div style={{ width:"30px", height:"30px", borderRadius:"50%", background:`${s.color}25`, border:`2px solid ${s.color}`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:"10px", fontWeight:900, color:s.color, margin:"0 auto 6px", position:"relative", zIndex:1 }}>{s.step}</div>
-              <div style={{ color:TEXT, fontSize:"10px", fontWeight:700 }}>{s.label}</div>
-              <div style={{ color:MUT, fontSize:"9px", marginTop:"1px" }}>{s.desc}</div>
+              <div style={{ color:TEXT, fontSize:"10px", fontWeight:700, wordBreak:"break-word" }}>{s.label}</div>
+              <div style={{ color:MUT, fontSize:"9px", marginTop:"1px", wordBreak:"break-word" }}>{s.desc}</div>
             </div>
           ))}
         </div>
@@ -274,10 +274,10 @@ export default function HitungPage() {
             { icon:"📊", label:"Dashboard",     desc:"Web App interaktif", color:"#ec4899" },
             { icon:"🌐", label:"Multi Bahasa",  desc:"Indonesia & Inggris",color:"#06b6d4" },
           ].map(c=>(
-            <div key={c.label} style={{ background:"rgba(255,255,255,0.05)", border:`1px solid rgba(255,255,255,0.08)`, borderRadius:"12px", padding:"10px 12px", textAlign:"center" }}>
+            <div key={c.label} style={{ background:"rgba(255,255,255,0.05)", border:`1px solid rgba(255,255,255,0.08)`, borderRadius:"12px", padding:"10px 8px", textAlign:"center", minWidth:0 }}>
               <div style={{ fontSize:"20px", marginBottom:"4px" }}>{c.icon}</div>
-              <div style={{ color:c.color, fontWeight:700, fontSize:"11px" }}>{c.label}</div>
-              <div style={{ color:MUT, fontSize:"10px", marginTop:"2px" }}>{c.desc}</div>
+              <div style={{ color:c.color, fontWeight:700, fontSize:"10px", wordBreak:"break-word", lineHeight:1.3 }}>{c.label}</div>
+              <div style={{ color:MUT, fontSize:"9px", marginTop:"2px", wordBreak:"break-word" }}>{c.desc}</div>
             </div>
           ))}
         </div>
